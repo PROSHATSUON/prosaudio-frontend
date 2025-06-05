@@ -63,8 +63,6 @@ function App() {
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef(null);
 
-  const backendURL = 'https://prosaudio.onrender.com';
-
   useEffect(() => {
     return () => {
       if (audioRef.current) {
@@ -78,7 +76,7 @@ function App() {
     const formData = new FormData();
     formData.append('file', file);
     try {
-      await axios.post(`${backendURL}/upload`, formData);
+      await axios.post('https://prosaudio.onrender.com/upload', formData);
     } catch (err) {
       console.error('Upload error:', err);
     }
@@ -136,10 +134,10 @@ function App() {
   const mergeAudio = async () => {
     const fileNames = files.map(file => file.name);
     try {
-      const response = await axios.post(`${backendURL}/merge`, fileNames, {
+      const response = await axios.post('https://prosaudio.onrender.com/merge', fileNames, {
         headers: { 'Content-Type': 'application/json' }
       });
-      const mergedUrl = `${backendURL}${response.data.url}`;
+      const mergedUrl = 'https://prosaudio.onrender.com' + response.data.url;
       setMergedAudioUrl(mergedUrl);
       alert('結合が完了しました！');
     } catch (error) {
